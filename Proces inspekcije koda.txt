@@ -1,0 +1,9 @@
+Svi smo jednako radili na implementaciji koda. Proces provjere je podijeljen na 3 dijela, ja (Eldar Muratovic)
+sam radio na inspekciji klase Program i Stan.  
+
+Kolega Hamza Bunar je izvrsio provjeru za klasu NamjestenStan
+i popunio checklistu na osnovu provjere 
+dok je kolega Vedad Ribo izvrsio provjeru za klasu NeNamjestenStan
+i popunio checklistu na osnovu provjere.
+
+Link za github: https://github.com/Plutonja/TS-Zadaca-1
