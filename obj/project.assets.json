@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eldar\\Documents\\ETF\\3 sem 23-24\\TS\\zadaca 1\\zadaca 1.csproj",
+      "projectUniqueName": "C:\\Users\\eldar\\Documents\\ETF\\1 sem\\TS\\zadaca 1\\zadaca 1.csproj",
       "projectName": "zadaca 1",
-      "projectPath": "C:\\Users\\eldar\\Documents\\ETF\\3 sem 23-24\\TS\\zadaca 1\\zadaca 1.csproj",
+      "projectPath": "C:\\Users\\eldar\\Documents\\ETF\\1 sem\\TS\\zadaca 1\\zadaca 1.csproj",
       "packagesPath": "C:\\Users\\eldar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eldar\\Documents\\ETF\\3 sem 23-24\\TS\\zadaca 1\\obj\\",
+      "outputPath": "C:\\Users\\eldar\\Documents\\ETF\\1 sem\\TS\\zadaca 1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\eldar\\AppData\\Roaming\\NuGet\\NuGet.Config",

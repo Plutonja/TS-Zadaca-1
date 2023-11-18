@@ -12,3 +12,17 @@ C:\Users\eldar\Documents\ETF\3 sem 23-24\TS\zadaca 1\obj\Debug\net7.0\refint\zad
 C:\Users\eldar\Documents\ETF\3 sem 23-24\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.pdb
 C:\Users\eldar\Documents\ETF\3 sem 23-24\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.genruntimeconfig.cache
 C:\Users\eldar\Documents\ETF\3 sem 23-24\TS\zadaca 1\obj\Debug\net7.0\ref\zadaca 1.dll
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.AssemblyInfoInputs.cache
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.AssemblyInfo.cs
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.csproj.CoreCompileInputs.cache
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.dll
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\refint\zadaca 1.dll
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.pdb
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\bin\Debug\net7.0\zadaca 1.exe
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\bin\Debug\net7.0\zadaca 1.deps.json
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\bin\Debug\net7.0\zadaca 1.runtimeconfig.json
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\bin\Debug\net7.0\zadaca 1.dll
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\bin\Debug\net7.0\zadaca 1.pdb
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\zadaca 1.genruntimeconfig.cache
+C:\Users\eldar\Documents\ETF\1 sem\TS\zadaca 1\obj\Debug\net7.0\ref\zadaca 1.dll
