@@ -11,13 +11,18 @@ class Program
         agencija.DodajStan(new NenamjestenStan(80, Lokacija.Prigradsko, true));
         agencija.DodajStan(new NamjestenStan(40, Lokacija.Prigradsko, true, 2000, 2));
         agencija.DodajStan(new NamjestenStan(80, Lokacija.Gradsko, false, 3000, 6));
-        agencija.DodajStan(new LuksuzniApartman(150, Lokacija.Gradsko, true, 10000, 12));
+        agencija.DodajStan(new LuksuzniApartman(350, Lokacija.Gradsko, true, 10000, 12, agencija.DohvatiOsoblje()));
 
         // Dodavanje osoblja
-        agencija.DodajOsoblje(new Batler("Alfred", "Pennyworth", new DateTime(2018, 7, 10), 3000));
-        agencija.DodajOsoblje(new Kuhar("Gordon", "Ramsay", new DateTime(2016, 4, 1), 2500));
-        agencija.DodajOsoblje(new Vrtlar("Najur", "Konig", new DateTime(2001, 11, 12), 3000));
+        agencija.DodajOsoblje(new Batler("Alfred", "Pennyworth", new DateTime(2018, 7, 10), 3000, 10));
+        agencija.DohvatiOsoblje().OfType<Batler>().FirstOrDefault()?.PostaviGodineIskustva(40);
 
+        agencija.DodajOsoblje(new Kuhar("Gordon", "Ramsay", new DateTime(2016, 4, 1), 2500));
+        agencija.DohvatiOsoblje().OfType<Kuhar>().FirstOrDefault()?.DodajJelo("Cevapi");
+        agencija.DohvatiOsoblje().OfType<Kuhar>().FirstOrDefault()?.DodajJelo("Pita ispod saca");
+        
+        agencija.DodajOsoblje(new Vrtlar("Najur", "Konig", new DateTime(2001, 11, 12), 4000, 50, true));
+        
         // Ispis svih stanova sortiranih po cijeni
         Console.WriteLine("\nSvi stanovi sortirani po cijeni:");
         agencija.IspisiSveStanoveSortiranePoCijeni();
@@ -109,17 +114,42 @@ class Program
                 switch (vrstaPosla.ToLower())
                 {
                     case "batler":
-                        novoOsoblje = new Batler(ime, prezime, DateTime.Now, plata);
+                        // Unos godina iskustva
+                        Console.WriteLine("Unesite godine iskustva za batlera:");
+                        int godineIskustvaBatlera;
+                        while (!int.TryParse(Console.ReadLine(), out godineIskustvaBatlera) || godineIskustvaBatlera < 0)
+                        {
+                            Console.WriteLine("Unos nije ispravan. Molimo unesite cijeli broj veći od 0.");
+                        }
+                        novoOsoblje = new Batler(ime, prezime, DateTime.Now, plata, godineIskustvaBatlera);
                         break;
+
                     case "vrtlar":
-                        novoOsoblje = new Vrtlar(ime, prezime, DateTime.Now, plata);
+                        Console.WriteLine("Unesite površinu nenamještenog stana za vrtlara:");
+                        int povrsinaStana;
+                        while (!int.TryParse(Console.ReadLine(), out povrsinaStana) || povrsinaStana < 0)
+                        {
+                            Console.WriteLine("Unos nije ispravan. Molimo unesite cijeli broj veći od 0.");
+                        }
+
+                        Console.WriteLine("Je li stan nenamješten? (da/ne):");
+                        bool nenamjestenStan = Console.ReadLine().ToLower() == "da";
+
+                        // Stvaranje instance Vrtlar klase s dodatnim podacima o stanu
+                        novoOsoblje = new Vrtlar(ime, prezime, DateTime.Now, plata, povrsinaStana, nenamjestenStan);
                         break;
+
                     case "kuhar":
                         novoOsoblje = new Kuhar(ime, prezime, DateTime.Now, plata);
+                        Console.WriteLine("Unesite jela koja kuhar može pripremiti (odvojena zarezima):");
+                        string jela = Console.ReadLine();
+
+                        // Razdvoji unesena jela zarezom
+                        string[] listaJela = jela.Split(',');
                         break;
                 }
 
-                // Provjera je li novoOsoblje inicijalizirano prije nego što ga koristite
+                // Provjera je li novoOsoblje inicijalizirano prije nego što se koristi
                 if (novoOsoblje != null)
                 {
                     agencija.DodajOsoblje(novoOsoblje);
@@ -185,8 +215,18 @@ class Agencija
     private List<Stan> stanovi = new List<Stan>();
     private List<Osoba> osoblje = new List<Osoba>();
 
-    public void DodajStan(Stan stan)
+    public List<Osoba> DohvatiOsoblje()
     {
+        return osoblje;
+    }
+
+    public void DodajStan(Stan stan, List<Osoba> osobljeNaImanju = null)
+    {
+        if (stan is LuksuzniApartman luksuzniApartman && osobljeNaImanju != null)
+        {
+            luksuzniApartman.PostaviOsobljeNaImanju(osobljeNaImanju);
+        }
+
         stanovi.Add(stan);
     }
 
@@ -253,40 +293,65 @@ abstract class Osoba
 
 class Batler : Osoba
 {
-    public Batler(string ime, string prezime, DateTime datumUposlenja, decimal plata)
+    public int GodineIskustva { get; set; }
+
+    public void PostaviGodineIskustva(int godineIskustva)
+    {
+        GodineIskustva = godineIskustva;
+    }
+
+    public Batler(string ime, string prezime, DateTime datumUposlenja, decimal plata, int godineIskustva)
         : base(ime, prezime, datumUposlenja, plata)
     {
+        GodineIskustva = godineIskustva;
     }
 
     public override void Ispisi()
     {
-        Console.WriteLine($"Batler: {Ime} {Prezime}, Datum uposlenja: {DatumUposlenja.ToShortDateString()}, Plata: {Plata:F2}");
+        Console.WriteLine($"Batler: {Ime} {Prezime}, Datum uposlenja: {DatumUposlenja.ToShortDateString()}, Plata: {Plata:F2}, Godine iskustva: {GodineIskustva}");
     }
 }
 
 class Kuhar : Osoba
 {
+    public List<string> ListaJela { get; private set; }
+    public void DodajJelo(string jelo)
+    {
+        ListaJela.Add(jelo);
+    }
     public Kuhar(string ime, string prezime, DateTime datumUposlenja, decimal plata)
         : base(ime, prezime, datumUposlenja, plata)
     {
+        ListaJela = new List<string>();
     }
 
     public override void Ispisi()
     {
         Console.WriteLine($"Kuhar: {Ime} {Prezime}, Datum uposlenja: {DatumUposlenja.ToShortDateString()}, Plata: {Plata:F2}");
+        Console.WriteLine("\nJela koja mogu pripremiti:");
+        foreach (var jelo in ListaJela)
+        {
+            Console.WriteLine(jelo);
+        }
     }
 }
 
 class Vrtlar : Osoba
 {
-    public Vrtlar(string ime, string prezime, DateTime datumUposlenja, decimal plata)
+    public int PovrsinaStana { get; }
+    public bool NenamjestenStan { get; }
+
+    public Vrtlar(string ime, string prezime, DateTime datumUposlenja, decimal plata, int povrsinaStana, bool nenamjestenStan)
         : base(ime, prezime, datumUposlenja, plata)
     {
+        PovrsinaStana = povrsinaStana;
+        NenamjestenStan = nenamjestenStan;
     }
 
     public override void Ispisi()
     {
         Console.WriteLine($"Vrtlar: {Ime} {Prezime}, Datum uposlenja: {DatumUposlenja.ToShortDateString()}, Plata: {Plata:F2}");
+        Console.WriteLine($"Površina stana: {PovrsinaStana} kvadrata, Stan nenamješten: {NenamjestenStan}");
     }
 }
 
@@ -365,12 +430,19 @@ class LuksuzniApartman : Stan
 {
     public decimal VrijednostNamjestaja { get; }
     public int BrojAparata { get; }
+    private List<Osoba> osobljeNaImanju;
 
-    public LuksuzniApartman(int brojKvadrata, Lokacija lokacija, bool internet, decimal vrijednostNamjestaja, int brojAparata)
-        : base(brojKvadrata, lokacija, internet)
+    public void PostaviOsobljeNaImanju(List<Osoba> osobljeNaImanju)
+    {
+        this.osobljeNaImanju = osobljeNaImanju;
+    }
+
+    public LuksuzniApartman(int brojKvadrata, Lokacija lokacija, bool internet, decimal vrijednostNamjestaja, int brojAparata, List<Osoba> osobljeNaImanju)
+    : base(brojKvadrata, lokacija, internet)
     {
         VrijednostNamjestaja = vrijednostNamjestaja;
         BrojAparata = brojAparata;
+        this.osobljeNaImanju = osobljeNaImanju;
     }
 
     public override void Ispisi()
@@ -380,7 +452,7 @@ class LuksuzniApartman : Stan
 
     public override decimal ObracunajCijenuNajma()
     {
-        decimal osnovnaCijena = 1500M; 
+        decimal osnovnaCijena = 1500M;
         decimal cijenaKvadrata = BrojKvadrata;
         decimal cijena = osnovnaCijena + cijenaKvadrata;
 
@@ -399,8 +471,12 @@ class LuksuzniApartman : Stan
             namjestajPovecanje = VrijednostNamjestaja * 0.02M;
         }
 
+        // Dodajte plate osoblja na imanju
+        foreach (Osoba osoba in osobljeNaImanju)
+        {
+            cijena += osoba.Plata;
+        }
+
         return cijena + namjestajPovecanje;
     }
 }
-
-
